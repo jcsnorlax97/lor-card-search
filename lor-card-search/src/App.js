@@ -1,11 +1,28 @@
 import React, { Component } from "react";
 import Form from "./Form";
+import Card from "./Card";
 
 class App extends Component {
   state = {
     formName: "",
     formGreeting: "",
+    cards: [],
   };
+
+  // do api call to get card information
+  componentDidMount() {
+    console.log(this.state.cards.length);
+    fetch(`/api/cards`)
+      .then((response) => response.json())
+      .then((jsonObj) => {
+        this.setState({
+          cards: jsonObj,
+        });
+      })
+      .then(() => {
+        console.log(this.state.cards);
+      });
+  }
 
   handleFormChange = (event) => {
     const target = event.target;
@@ -37,6 +54,10 @@ class App extends Component {
           onFormSubmit={this.handleFormSubmit}
         />
         {this.state.formGreeting}
+        {this.state.cards.length > 0 &&
+          this.state.cards.map((card) => (
+            <Card key={card.cardCode} card={card} />
+          ))}
       </React.Fragment>
     );
   }
