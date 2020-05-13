@@ -1,6 +1,7 @@
 const cardRoutes = (app, fs) => {
   // variables
-  const dataPath = "./server/data/set1-en_us.json";
+  // const dataPath = "./server/data/set1-en_us.json";
+  const dataPath = "./server/data/test-data.json";
 
   // READ
   app.get("/api/cards", (req, res) => {
