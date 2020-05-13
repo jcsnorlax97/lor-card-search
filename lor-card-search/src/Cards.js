@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
+import Card from "./Card";
 
-const Cards = ({ }) => {
-    return (  );
-}
- 
+const Cards = ({ cards }) => {
+  return cards.map((card) => <Card key={card.cardCode} card={card} />);
+};
+
 export default Cards;

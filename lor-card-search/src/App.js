@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Form from "./Form";
-import Card from "./Card";
+import Cards from "./Cards";
 import "./App.css";
 
 class App extends Component {
@@ -52,8 +52,7 @@ class App extends Component {
           onFormSubmit={this.handleFormSubmit}
         />
         {this.state.formGreeting}
-        {cards.length > 0 &&
-          cards.map((card) => <Card key={card.cardCode} card={card} />)}
+        <Cards cards={cards} />
       </React.Fragment>
     );
   }
