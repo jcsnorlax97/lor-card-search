@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Form from "./Form";
 import Card from "./Card";
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -15,12 +16,7 @@ class App extends Component {
     fetch(`/api/cards`)
       .then((response) => response.json())
       .then((jsonObj) => {
-        this.setState({
-          cards: jsonObj,
-        });
-      })
-      .then(() => {
-        console.log(this.state.cards);
+        this.setState({ cards: jsonObj });
       });
   }
 
@@ -46,6 +42,8 @@ class App extends Component {
   };
 
   render() {
+    const cards = this.state.cards;
+    console.log(cards);
     return (
       <React.Fragment>
         <Form
@@ -54,10 +52,8 @@ class App extends Component {
           onFormSubmit={this.handleFormSubmit}
         />
         {this.state.formGreeting}
-        {this.state.cards.length > 0 &&
-          this.state.cards.map((card) => (
-            <Card key={card.cardCode} card={card} />
-          ))}
+        {cards.length > 0 &&
+          cards.map((card) => <Card key={card.cardCode} card={card} />)}
       </React.Fragment>
     );
   }

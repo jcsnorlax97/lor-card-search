@@ -1,3 +1,13 @@
+/* --- Card --- */
+.card {
+  padding: 0em;
+  margin: 1em;
+  height: 200px;
+  width: 135px;
+}
+
+/* --- App --- */
+
 .App {
   text-align: center;
 }
@@ -32,6 +42,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
