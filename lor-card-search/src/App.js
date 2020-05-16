@@ -5,8 +5,13 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    formName: "",
-    formGreeting: "",
+    formCost: [],
+    formPower: [],
+    formHealth: [],
+    formRegion: [],
+    formRarity: [],
+    formKeyword: [],
+    formText: "",
     cards: [],
   };
 
@@ -29,16 +34,37 @@ class App extends Component {
     });
   };
 
+  handleFormSelect = (event) => {
+    const target = event.target;
+    const name = target.name; // key used to accessing state (based on the 'name' attribute in <form><input name="XXX" .../></form>)
+    const value = target.value; // new value that is clicked
+    let values = [...this.state[name]]; // values that are selected currently in the state
+    const isInValues = values.includes(value); // is value in values already?
+
+    // if the value is currently selected, remove it from the list; otherwise, push it to the list
+    // console.log("[Before] ", values);
+    values = isInValues
+      ? values.filter((v) => v !== value)
+      : [...values, value];
+    // console.log("[After] ", values);
+
+    // update the state
+    this.setState({
+      [name]: values,
+    });
+  };
+
   handleFormSubmit = (event) => {
     event.preventDefault(); // prevent page auto reload
-    fetch(`/api/greeting?name=${encodeURIComponent(this.state.formName)}`)
-      .then((response) => response.json())
-      .then((jsonObj) => {
-        console.log(jsonObj);
-        this.setState({
-          formGreeting: jsonObj["greeting"],
-        });
-      });
+    console.log(event);
+    // fetch(`/api/greeting?name=${encodeURIComponent(this.state.formName)}`)
+    //   .then((response) => response.json())
+    //   .then((jsonObj) => {
+    //     console.log(jsonObj);
+    //     this.setState({
+    //       formGreeting: jsonObj["greeting"],
+    //     });
+    //   });
   };
 
   render() {
@@ -47,11 +73,17 @@ class App extends Component {
     return (
       <React.Fragment>
         <Form
-          formName={this.state.formName}
+          formCost={this.state.formCost}
+          formPower={this.state.formPower}
+          formHealth={this.state.formHealth}
+          formRegion={this.state.formRegion}
+          formRarity={this.state.formRarity}
+          formKeyword={this.state.formKeyword}
+          formText={this.state.formText}
           onFormChange={this.handleFormChange}
+          onFormSelect={this.handleFormSelect}
           onFormSubmit={this.handleFormSubmit}
         />
-        {this.state.formGreeting}
         <Cards cards={cards} />
       </React.Fragment>
     );
