@@ -54,6 +54,8 @@ class App extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault(); // prevent page auto reload
+
+    // extract state information into new variables using destructuring
     const {
       formCost,
       formPower,
@@ -64,7 +66,7 @@ class App extends Component {
       formText,
     } = this.state;
 
-    // TODO: convert data type to int
+    // create new variable to store data that will be sent with the POST request
     const data = {
       formCost: formCost, // array: int (cost)
       formPower: formPower, // array: int (attack)
@@ -91,7 +93,6 @@ class App extends Component {
 
   render() {
     const cards = this.state.cards;
-    console.log(cards);
     return (
       <React.Fragment>
         <Form
