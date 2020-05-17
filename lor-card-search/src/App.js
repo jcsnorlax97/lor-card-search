@@ -42,11 +42,9 @@ class App extends Component {
     const isInValues = values.includes(value); // is value in values already?
 
     // if the value is currently selected, remove it from the list; otherwise, push it to the list
-    // console.log("[Before] ", values);
     values = isInValues
       ? values.filter((v) => v !== value)
       : [...values, value];
-    // console.log("[After] ", values);
 
     // update the state
     this.setState({
@@ -56,15 +54,39 @@ class App extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault(); // prevent page auto reload
-    console.log(event);
-    // fetch(`/api/greeting?name=${encodeURIComponent(this.state.formName)}`)
-    //   .then((response) => response.json())
-    //   .then((jsonObj) => {
-    //     console.log(jsonObj);
-    //     this.setState({
-    //       formGreeting: jsonObj["greeting"],
-    //     });
-    //   });
+    const {
+      formCost,
+      formPower,
+      formHealth,
+      formRegion,
+      formRarity,
+      formKeyword,
+      formText,
+    } = this.state;
+
+    // TODO: convert data type to int
+    const data = {
+      formCost: formCost, // array: int (cost)
+      formPower: formPower, // array: int (attack)
+      formHealth: formHealth, // array: int (health)
+      formRegion: formRegion, // array: characters (regionRef)
+      formRarity: formRarity, // array: characters (rarityRef: spell === 'None')
+      formKeyword: formKeyword, // array: characters
+      formText: formText,
+    };
+
+    // use fetch() to do a POST request
+    fetch(`/api/cards`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data), // this data type matches "Content-Type" header
+    })
+      .then((response) => response.json())
+      .then((jsonObj) => {
+        this.setState({ cards: jsonObj });
+      });
   };
 
   render() {
