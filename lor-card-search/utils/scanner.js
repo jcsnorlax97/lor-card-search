@@ -13,6 +13,7 @@ class Scanner {
 
   run() {
     this.read((err, content) => {
+      if (err) throw err;
       const jsonStr = content;
       const jsonObj = this.parse(jsonStr);
       this.display(jsonObj);
@@ -23,7 +24,7 @@ class Scanner {
   // Get data from fs.readFile: https://stackoverflow.com/a/10058879
   read(callback) {
     this.fs.readFile(this.dataPath, "utf8", (err, content) => {
-      if (err) throw callback(err);
+      if (err) throw callback(err, null);
       callback(null, content);
     });
   }
